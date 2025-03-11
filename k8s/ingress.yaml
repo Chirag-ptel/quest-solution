@@ -1,0 +1,37 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: quest-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: "ingress"
+    # kubernetes.io/ingress.class: "gce"  # Using the GCE Ingress Controller
+    # networking.gke.io/v1beta1.FrontendConfig: "frontend-config"
+    kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "40"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "40"
+    cert-manager.io/cluster-issuer: selfsigned-clusterissuer
+spec:
+  ingressClassName: nginx
+  defaultBackend:
+    service:
+      name: rearc-quest
+      port:
+        number: 80
+  tls:
+  - hosts:
+    - quest-ingress-3c860cc99ab12e52.elb.ap-south-1.amazonaws.com
+    secretName: quest-lb-tls  # The name of the TLS secret containing your SSL certificates
+
+  rules:   
+  - host: quest-ingress-3c860cc99ab12e52.elb.ap-south-1.amazonaws.com
+    http:
+      paths:
+      - path: /*
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: rearc-quest
+            port:
+              number: 80

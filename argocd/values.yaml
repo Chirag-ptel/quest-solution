@@ -1,0 +1,11 @@
+server:
+  service:
+    type: LoadBalancer
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-name: argocd-lb
+      service.beta.kubernetes.io/aws-load-balancer-type: external
+      service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+      service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+configs:
+  secret:
+    argocdServerAdminPassword: "$2a$10$CBSdmYtgnaBDMreZzx0SNOdGodNiGlzQ1uri3/nc5O1ffrQDPGBtG"

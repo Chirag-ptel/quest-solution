@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rearc-quest
+  namespace: default
+  labels:
+    app: rearc-quest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rearc-quest
+  template:
+    metadata:
+      labels:
+        app: rearc-quest
+    spec:
+      serviceAccountName: quest-deployment-sa
+      volumes:
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "quest-deployment-pod-identity-aws-secrets"
+      containers:
+      - name: rearc-quest
+        image: 992382391803.dkr.ecr.ap-south-1.amazonaws.com/myecr/rearc-quest:0.0.4
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+          - name: secrets-store-inline
+            mountPath: "/mnt/secrets-store"
+            # subPath: MY_SECRET_WORD
+            readOnly: true
+        command:
+          - "/bin/bash"
+          - "-c"
+          - "npm run start"
+        env:
+          - name: SECRET_WORD
+            valueFrom:
+              secretKeyRef:
+                name: secret-from-secret-manager
+                key: SECRET_WORD
+        resources:
+          requests:
+            memory: "128Mi"  
+            cpu: "250m"     
+          limits:
+            memory: "256Mi"  
+            cpu: "500m" 
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 20
+          periodSeconds: 20
+          timeoutSeconds: 10
+          failureThreshold: 5
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 20
+          periodSeconds: 15
+          timeoutSeconds: 10
+          failureThreshold: 5
