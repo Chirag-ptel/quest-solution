@@ -18,7 +18,7 @@ jobs:
       - name: Print the SHA
         run: |
           echo "${GITHUB_SHA}"
-        name: Login to ECR
+      - name: Login to ECR
         uses: docker/login-action@v3
         with:
           registry: ${{ secrets.ECR_REPO }}
@@ -27,7 +27,8 @@ jobs:
       - name: Build and push Docker image for playstream-frontend
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: quest
+          file: quest/Dockerfile.test
           push: true
           tags: ${{ secrets.CONTAINER_REGISTRY_URL }}/myecr/rearc-quest:${{ github.sha }}
       - name: Change the tag
