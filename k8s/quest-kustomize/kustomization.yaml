@@ -6,8 +6,6 @@ resources:
 - service.yaml
 - secretproviderclass.yaml
 - sa.yaml
-- https://github.com/cert-manager/cert-manager/releases/download/v1.17.0/cert-manager.yaml
-- issuer.yaml
 
 images:
   - name: quest-image
