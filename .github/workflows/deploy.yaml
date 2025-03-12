@@ -33,7 +33,7 @@ jobs:
           tags: ${{ secrets.ECR_REPO }}/myecr/rearc-quest:${{ github.sha }}
       - name: Change the tag
         run: |
-          sed -i "s/\(newTag:\s*\)[^ ]*/\${GITHUB_SHA}/" k8s/quest-kustomize/kustomization.yaml
+          sed -i 's/\(newTag: \).*/\${GITHUB_SHA}/' k8s/quest-kustomize/kustomization.yaml
           cat k8s/quest-kustomize/kustomization.yaml
 
       
