@@ -31,7 +31,6 @@ spec:
         volumeMounts:
           - name: secrets-store-inline
             mountPath: "/mnt/secrets-store"
-            # subPath: MY_SECRET_WORD
             readOnly: true
         command:
           - "/bin/bash"
