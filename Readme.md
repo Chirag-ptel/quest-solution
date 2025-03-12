@@ -117,17 +117,38 @@ This **GitHub Actions workflow** automates the process of **building a Docker im
 ---
 ### EKS OUTPUT
 ---
-While running in eks application is not able to verify the AWS platform.
+### While running in eks application is not able to verify the AWS platform.
 ![eks quest output](images/eks-quest.png)
 
-Its not able to detect the load-balancer because service is exposed via ingress-nginx.
+### Its not able to detect the load-balancer because service is exposed via ingress-nginx.
 ![eks lb output](images/eks-lb.png)
 
-Self signed cert is created for ingress service lb dns name.
+### Self signed cert is created for ingress service lb dns name.
 ![eks tls output](images/eks-tls.png)
 
-Not able to detect docker because of containerd runtime.
+### Not able to detect docker because of containerd runtime.
 ![eks docker output](images/eks-docker.png)
 
-secret word output.
+### secret word output.
 ![eks docker output](images/eks-secret.png)
+
+### EKS pods
+![eks pods](images/eks-pods.png)
+
+### ArgoCD application
+![eks argocd app](images/eks-argocd-app.png)
+
+
+---
+
+#### While deploying the app on EKS it is not able to detect the AWS.Therefore, ECS solution is provided which shares the same VPC and secret from the secret manager.
+
+### ECS setup resources
+- Task definition
+- ECS service in private subnets
+- Load balancer, target group, listner for 80 and 443, 80 to 443 redirect
+- Self signed cert imported to ACM and used in 443 listener.
+---
+
+### ECS Output
+![ecs quest output](images/ecs-quest.png)
