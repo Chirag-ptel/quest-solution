@@ -24,13 +24,13 @@ jobs:
           registry: ${{ secrets.ECR_REPO }}
           username: ${{ secrets.AWS_ACCESS_KEY_ID }}
           password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      - name: Build and push Docker image for playstream-frontend
+      - name: Build and push Docker image 
         uses: docker/build-push-action@v5
         with:
           context: quest
           file: quest/Dockerfile.test
           push: true
-          tags: ${{ secrets.CONTAINER_REGISTRY_URL }}/myecr/rearc-quest:${{ github.sha }}
+          tags: ${{ secrets.ECR_REPO }}/myecr/rearc-quest:${{ github.sha }}
       - name: Change the tag
         run: |
           sed -i "s/\(newTag:\s*\)[^ ]*/\${GITHUB_SHA}/" k8s/quest-kustomize/kustomization.yaml
