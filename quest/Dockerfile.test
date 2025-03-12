@@ -6,4 +6,6 @@ COPY . /app
 
 RUN npm install
 
+RUN chmod -R +x bin/
+
 CMD ["npm", "run", "start"]
