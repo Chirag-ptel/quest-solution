@@ -12,6 +12,7 @@ on:
        - ingress-nginx
        - secret-csi-criver
        - argocd
+       - ecs
      action:
        type: choice
        discription: 'Which action do you want to perform?'
