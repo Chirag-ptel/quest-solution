@@ -35,5 +35,11 @@ jobs:
         run: |
           sed -i "s/\(newTag: \).*/\1${GITHUB_SHA}/" k8s/quest-kustomize/kustomization.yaml
           cat k8s/quest-kustomize/kustomization.yaml
+      - name: Update the image tag for ArgoCD
+        uses: EndBug/add-and-commit@v9
+        with:
+          default_author: github_actions
+          add: 'k8s/quest-kustomize/kustomization.yaml'
+          message: 'Changed the Image Tag to ${GITHUB_SHA}'
 
       
