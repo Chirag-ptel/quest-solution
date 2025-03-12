@@ -25,7 +25,7 @@ spec:
               secretProviderClass: "quest-deployment-pod-identity-aws-secrets"
       containers:
       - name: rearc-quest
-        image: 992382391803.dkr.ecr.ap-south-1.amazonaws.com/myecr/rearc-quest:0.0.4
+        image: quest-image
         ports:
         - containerPort: 3000
         volumeMounts:

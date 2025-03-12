@@ -1,0 +1,38 @@
+name: Build, Push, Deploy
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'quest/**'
+  workflow_dispatch:
+jobs:
+  build-image:
+    name: Build and Push Image to Registry
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Print the SHA
+        run: |
+          echo "${GITHUB_SHA}"
+        name: Login to ECR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.ECR_REPO }}
+          username: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Build and push Docker image for playstream-frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.CONTAINER_REGISTRY_URL }}/myecr/rearc-quest:${{ github.sha }}
+      - name: Change the tag
+        run: |
+          sed -i "s/\(newTag:\s*\)[^ ]*/\${GITHUB_SHA}/" k8s/quest-kustomize/kustomization.yaml
+          cat k8s/quest-kustomize/kustomization.yaml
+
+      
