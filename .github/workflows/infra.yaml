@@ -1,0 +1,42 @@
+name: To Provision the infra
+on: 
+ workflow_dispatch:
+   inputs:
+     service_name:
+       type: choice
+       discription: 'Choose the directory'
+       options:
+       - vpc
+       - eks
+       - lb-controller
+       - ingress-nginx
+       - secret-csi-criver
+       - argocd
+     action:
+       type: choice
+       discription: 'Which action do you want to perform?'
+       options:
+       - plan
+       - apply -auto-approve
+       - destroy -auto-approve
+jobs:
+ build:
+  runs-on: ubuntu-latest
+  steps:
+   - name: Checkout Code
+     uses: actions/checkout@v4
+   - name: AWS Credentials
+     uses: aws-actions/configure-aws-credentials@v4
+     with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+   - name: Terraform init
+     run:  |
+       cd ${{ github.event.inputs.service_name }}
+       terraform init
+   - name: Terraform ${{ github.event.inputs.action }}
+     run:  |
+       pwd
+       cd ${{ github.event.inputs.service_name }}
+       terraform ${{ github.event.inputs.action }}
