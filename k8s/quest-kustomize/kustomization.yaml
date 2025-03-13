@@ -9,4 +9,4 @@ resources:
 images:
   - name: quest-image
     newName: 992382391803.dkr.ecr.ap-south-1.amazonaws.com/myecr/rearc-quest
-    newTag: 4c3d0ef875a65d650dae0d61b92ecef7054b85da
+    newTag: a7956ef3bf2277662545b013647d5019360bfac3
