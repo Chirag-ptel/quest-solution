@@ -11,12 +11,12 @@ terraform {
   }
 }
 
-provider "argocd" {
-  server_addr = "${data.kubernetes_service.argocd_server.status[0].load_balancer[0].ingress[0].hostname}"
-  username    = var.argo_user
-  password    = var.argo_pass
-  insecure    = true
-}
+#provider "argocd" {
+#  server_addr = "${data.kubernetes_service.argocd_server.status[0].load_balancer[0].ingress[0].hostname}"
+#  username    = var.argo_user
+#  password    = var.argo_pass
+#  insecure    = true
+#}
 
 provider "kubernetes" {
   host                   = data.aws_eks_cluster.eks.endpoint
@@ -67,18 +67,15 @@ resource "helm_release" "argocd" {
   values = [file("${path.module}/values.yaml")]
 }
 
-data "kubernetes_service" "argocd_server" {
-  metadata {
-    name      = "argocd-server"  # Replace with the actual service name
-    namespace = var.namespace
-  }
-}
+#data "kubernetes_service" "argocd_server" {
+#  metadata {
+#    name      = "argocd-server"  # Replace with the actual service name
+#    namespace = var.namespace
+#  }
+#}
 
-resource "argocd_repository" "private" {
-  repo            = "https://github.com/Chirag-ptel/quest-raw.git"
-  username        = var.repo_user
-  password        = var.repo_pass
-  insecure        = true
-  type            = "git"
-}
+#resource "argocd_repository" "quest-solution" {
+#  repo            = "https://github.com/Chirag-ptel/quest-solution.git"
+#  type            = "git"
+#}
 

@@ -58,26 +58,26 @@ variable "namespace" {
   description = "Kubernetes namespace to deploy helm chart."
 }
 
-variable "repo_user" {
-  type        = string
-  default     = "Chirag-ptel"
-  description = "Argocd repo username"
-}
+#variable "repo_user" {
+#   type        = string
+#   default     = "Chirag-ptel"
+#   description = "Argocd repo username"
+# }
 
-variable "repo_pass" {
-  type        = string
-  description = "Argocd repo token"
-  sensitive   = true
-}
+# variable "repo_pass" {
+#   type        = string
+#   description = "Argocd repo token"
+#   sensitive   = true
+# }
 
-variable "argo_user" {
-  type        = string
-  default     = "admin"
-  description = "Argocd username"
-}
+# variable "argo_user" {
+#   type        = string
+#   default     = "admin"
+#   description = "Argocd username"
+# }
 
-variable "argo_pass" {
-  type        = string
-  description = "Argocd password"
-  sensitive   = true
-}
+# variable "argo_pass" {
+#   type        = string
+#   description = "Argocd password"
+#   sensitive   = true
+# }
