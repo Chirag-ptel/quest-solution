@@ -13,8 +13,8 @@ spec:
     server: "https://kubernetes.default.svc"
   source:
     path: k8s/quest-kustomize
-    repoURL: "https://github.com/Chirag-ptel/quest-raw.git"
-    targetRevision: secret-provider
+    repoURL: "https://github.com/Chirag-ptel/quest-solution.git"
+    targetRevision: main
   syncPolicy:
     automated:
       prune: true

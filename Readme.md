@@ -33,9 +33,9 @@ Terraform is used with S3 backend for managing the infra. Its written in the mod
     - NAT gateways
     - Internet gateway
 - EKS
-    - eks managed node group
-    - pod-idenitity-agent addon for assigning iam role for pods
-    - eks access entry for accessing the cluster via kubectl
+    - eks managed node group.
+    - pod-idenitity-agent addon for assigning iam role for pods to provide the access to specific secret in secret manager.
+    - eks access entry for accessing the cluster via kubectl.
     - Load-balancer controller for managing load balancer for k8s service.
     - Ingress-nginx for creating ingress, path based routing, tls for different services.
     - Secret-csi-driver to mount the secrets as volumes in the pods.
@@ -152,3 +152,37 @@ This **GitHub Actions workflow** automates the process of **building a Docker im
 
 ### ECS Output
 ![ecs quest output](images/ecs-quest.png)
+
+---
+## Possible improvements in the current solution
+
+###  Performance
+
+#### EKS
+- Pod autoscaling can be configured using hpa and metrics server, Nodes autoscaling can be configured via karpenter.
+- Custom metrics can be configured for observability.
+- Deployment strategies can be defined in the deployment to make sure enough healthy pods during deployment, Rollback can be defined in the CICD in case of deployment failures.
+
+#### ECS 
+- Autoscaling policies can be configured based on CPU, memory or custom metrics.
+
+### Availability
+
+#### EKS
+- Spread the nodes to multiple AZs.
+- Pods can be spread throurgh node-selector, Node-affinity, Pod-affinity for highavailability.
+- Deployment strategies can be defined in the deployment to make sure enough healthy pods during deployment, Rollback can be defined in the CICD in case of deployment failures.
+
+#### ECS
+- Spread tasks across multiple AZs.
+- Code-deploy can be used for deployment-stategies, rollback.
+
+
+### Security
+- While currently using admin access user for terraform and cicd, Instead of this roles and policies with least privileges can be used.
+- EKS cluster has public api endpoint for accessing via local, can change that for private.
+- Used NACLs and security groups can be modified to allow only specific traffic.
+- Code scanning, secret scanner, image scanner can be configured.
+- Dynamodb statelock can be configured to prevent simultaneous infra changes.
+- In the CICD, manual approval stages and notifications can be added.
+- WAF or shield can be used to prevent  SQL injection, XSS, DDoS as well as rate limiting.
