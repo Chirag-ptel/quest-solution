@@ -186,3 +186,16 @@ This **GitHub Actions workflow** automates the process of **building a Docker im
 - Dynamodb statelock can be configured to prevent simultaneous infra changes.
 - In the CICD, manual approval stages and notifications can be added.
 - WAF or shield can be used to prevent  SQL injection, XSS, DDoS as well as rate limiting.
+
+---
+#### Notes:
+
+Chatgpt is used to enhance and improve the format of documentation.
+
+In EKS, application is not able to detect the AWS platform. Therefore ECS solution is provided.
+
+Although ECS is more suitable and easy to manage solution for this app, an EKS solution is provided to demonstrate working knowledge of EKS and K8s.
+
+Attempted tp debug the code to identify and solve the issue with the platform detection which did not work because of executables used in code.
+
+Would like to know the mechanism for detecting Cloud platform, Docker, Load balancer, TLS.

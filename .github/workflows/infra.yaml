@@ -10,7 +10,7 @@ on:
        - eks
        - lb-controller
        - ingress-nginx
-       - secret-csi-criver
+       - secret-csi-driver
        - argocd
        - ecs
      action:
